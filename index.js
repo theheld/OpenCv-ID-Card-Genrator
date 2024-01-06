@@ -99,9 +99,10 @@ function addTextAndOverlayToFrontImage(name, empCode, overlaySrc) {
             ctx.fillText(`Employee Code: ${empCode}`, centerX, 640);
             // Check if front label hasn't been generated yet
             if (!frontLabelGenerated) {
-                frontLabelGenerated = true; // Set flag to true to avoid repeated downloads
-                // Save the canvas as an image with front label
-                saveCanvasAsImage(canvas, 'front_label.jpg');
+                frontLabelGenerated = true;
+                // Modify the filename for front export using employee code
+                const frontFileName = `${empCode}_front_label.jpg`;
+                saveCanvasAsImage(canvas, frontFileName);
             }
         };
         overlayImg.src = overlaySrc; // Pass the overlay image source dynamically
@@ -110,7 +111,7 @@ function addTextAndOverlayToFrontImage(name, empCode, overlaySrc) {
 }
 
 // OpenCv Back ID Card
-function addTextToBackImage(emergencyContact, bloodGroup) {
+function addTextToBackImage(emergencyContact, bloodGroup, empCode) {
     const backImg = new Image();
     backImg.crossOrigin = "Anonymous"; // Enable CORS for the image
     backImg.onload = () => {
@@ -130,8 +131,10 @@ function addTextToBackImage(emergencyContact, bloodGroup) {
         ctx.fillText(bloodGroup, 360, 135);
         // You can further process or export this canvas as needed.
         if (!backLabelGenerated) {
-            backLabelGenerated = true; // Set flag to true to avoid repeated downloads
-            saveCanvasAsImage(canvas, 'Back_ID.jpg');
+            backLabelGenerated = true;
+            // Modify the filename for back export using the name
+            const backFileName = `${empCode}_Back_ID.jpg`;
+            saveCanvasAsImage(canvas, backFileName);
         }
     };
     backImg.src = '/templates/back.jpeg'; // Replace with your back image path
@@ -199,7 +202,7 @@ async function makingIdCard(name, empCode, emergencyContact, bloodGroup, imagePa
     console.log("Selected Image Path:", imagePath);
     console.log(imagePath);
     addTextAndOverlayToFrontImage(name, empCode, imagePath);
-    addTextToBackImage(emergencyContact, bloodGroup);
+    addTextToBackImage(emergencyContact, bloodGroup, empCode);
 }
 
 // test function 
