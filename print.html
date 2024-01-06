@@ -3,18 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="printstyle.css">
+    <link rel="icon" type="image/x-icon" href="icons/FavIcon.svg">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Print</title>
 </head>
 <body>
-
     <div class="div_1"></div>
     <div class="div_2">
         <input id="fileInputCard1" type="file" style="display: none;"
             onchange="displaySelectedImage('fileInputCard1', 'Card1')">
         <img id="Card1" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="">
-    </div>
-    
+    </div>  
     <div class="div_3">
         <input id="fileInputCard2" type="file" style="display: none;"
             onchange="displaySelectedImage('fileInputCard2', 'Card2')">
@@ -22,8 +21,9 @@
     </div>
 
     <div class="div_4">
-        <iconify-icon icon="material-symbols:print" style="color: white;" width="44" height="44"></iconify-icon>
+        <iconify-icon id="genrator" icon="octicon:id-badge-16" style="color: white;" width="44" height="44"></iconify-icon>
         <button id="Print" class="print_button">Print</button>
+        <iconify-icon id="resetButton" icon="iconamoon:restart" style="color: white;" width="32" height="32"></iconify-icon>
     </div>
     <div id="snackbar"></div>
     <script async src="library/opencv.js" type="text/javascript"></script>

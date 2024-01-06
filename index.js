@@ -57,9 +57,9 @@ function displaySelectedImage(event) {
 
 // open CV Front ID Card
 function addTextAndOverlayToFrontImage(name, empCode, overlaySrc) {
-    const overlayY = 240; // X-coordinate for overlay image
-    const overlayWidth = 280; // Width of overlay image
-    const overlayHeight = 280; // Height of overlay image
+    const overlayY = 240; // Y-coordinate for overlay image
+    const overlayWidth = 280; // Width of overlay image container
+    const overlayHeight = 320; // Height of overlay image container
     const frontImg = new Image();
     frontImg.crossOrigin = "Anonymous"; // Enable CORS for the image
     frontImg.onload = () => {
@@ -73,10 +73,16 @@ function addTextAndOverlayToFrontImage(name, empCode, overlaySrc) {
         const overlayImg = new Image();
         overlayImg.crossOrigin = "Anonymous"; // Enable CORS for the image
         overlayImg.onload = () => {
-            // Calculate overlayY dynamically for vertical centering
-            const overlayX = (canvas.height - overlayHeight) / 4; // Center the overlay vertically
-            // Draw the overlay image on top of the front image with specified position and size
-            ctx.drawImage(overlayImg, overlayX, overlayY, overlayWidth, overlayHeight);
+            const aspectRatio = overlayImg.width / overlayImg.height;
+            let overlayWidthActual = overlayWidth;
+            let overlayHeightActual = overlayWidthActual / aspectRatio;
+            if (overlayHeightActual > overlayHeight) {
+                overlayHeightActual = overlayHeight;
+                overlayWidthActual = overlayHeightActual * aspectRatio;
+            }
+            const overlayX = (canvas.width - overlayWidthActual) / 2;
+            const overlayYActual = overlayY + (overlayHeight - overlayHeightActual) / 2;
+            ctx.drawImage(overlayImg, overlayX, overlayYActual, overlayWidthActual, overlayHeightActual);
             // Add text (name and employee code) to the front image
             ctx.font = '35.2px Arial'; // Set font size and style
             ctx.fillStyle = 'black'; // Set text color
